@@ -1,0 +1,260 @@
+\pdfoutput=1
+\documentclass[12pt]{article}
+%\documentclass[aps,preprint,onecolumn]{revtex4-1}
+%\documentclass[preprint]{revtex4-1}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage[margin =1 in]{geometry}
+%\usepackage{ulem}
+%\usepackage{mathtools}
+
+
+%% Macros
+\def\reals{\mathbb{R}}
+\def\be{\begin{equation}}
+\def\ee{\end{equation}}
+\def\bea{\begin{eqnarray}}
+\def\eea{\end{eqnarray}}
+\def\bml{\begin{mathletters}}
+\def\eml{\end{mathletters}}
+\def\bse{\begin{subequations}}
+\def\ese{\end{subequations}}
+\def\expec{\mathbb{E}}
+\def\exp{\text{exp}}
+\def\Var{\text{Var}}
+\def\e{\text{e}}
+\def\ba{\begin{align}}
+\def\ea{\end{align}}
+\def\Re{\text{Re}}
+\def\St{\text{St}}
+\def\O{\mathcal{O}}
+
+\begin{document}
+
+\title{A toy model of ensemble induced epistasis}
+\author{Brandon H. Schlomann}
+%\email{bschloma@uoregon.edu}
+%\affiliation{Department of Physics and Institute of Molecular Biology, University of Oregon, Eugene, Oregon, 97405}
+\date{\today}
+
+
+
+
+\maketitle
+\setlength\parskip{12pt}
+\setlength\parindent{0pt}
+
+High-order epistasis is quite an enigmatic phenomenon.  While most commonly discussed in the context of mutations in proteins and macromolecues, it is in fact a general phenomenon and arises in other systems, most famously community ecology, where it is framed as ``high-order interactions", or, ``non-linear interactions''.  In both contexts, people argue hotly over its existence, origins, consequences, and how best to measure it.
+
+
+Following Zach Sailer's work on ensemble induced epistasis in a lattice protein model, I develop here a toy ensemble model, abstracted from the context of molecules, to study the emergence of high-order epistasis as a purely statistical property of ensemble systems.  Mathematically, epistasis arises due to the normalization of probabilities, which introduces non-additive changes to ensemble-averaged observables.  This is analogous to the central role that partition functions play in thermal models of ensemble induced allostery (Cooper + Dryden 1984).
+
+I also explore what ensemble induced epistasis looks like in the limit of many states, analogous to recent efforts by physicists working in community ecology to draw parallels with disordered ordered systems and use tools from mean field theory.  I show that for a general class of random perturbations (mutations), pairwise epistasis limits to a Gaussian distributed variable and calculate its mean and variance.
+
+
+\section*{Model foundations}
+
+Consider a system of $S$ states specified with probabilities $p_i$, $i = 1,2,3,...,S$.  Let $\O$ be a generic observable that is an arbitrary function of the states with values $\O_i$ at each state $i$.  We will refer to this observable as a phenotype.  The phenotype measured in an ensemble system will be the average phenotype over the ensemble,
+
+\be
+\langle \O \rangle = \sum_j \O_j p_j
+\ee
+
+Consider now a set of perturbations (mutations) to the system, each identified by a label $n = 1,2,3,...,N$, that can generally alter both the probability and the observable of each state.  We will take the perturbations to be additive so that an additive model of combined perturbations (the most commonly used non-interacting model) is exact when there is only one state.  
+
+It will be convenient to define the perturbation to probabilities as a properly normalized distribution of its own, denoted by $\alpha_{i,n}$, where $i$ refers to the state and $n$ labels the perturbation.  Other than being non-negative and properly normalized, the $\alpha_{i,n}$s are arbitrary.  
+
+Let the original probabilities be denoted by $p_{i,0}$.  Following perturbation number $n$, the new probability of the $i^{th}$ state, denoted by $p_{i,n}$, is now just the average of the original and perturbing probabilities:
+
+\be
+p_{i,n} = \frac{p_{i,0} + \alpha_{i,n}}{\sum_j (p_{j,0} + \alpha_{j,n})} = \frac{p_{i,0} + \alpha_{i,n}}{2}.
+\ee 
+
+For the phenotypes, let the original phenotypes be denoted $\O_{i,0}$.  These will be perturbed by terms denoted by $\beta_{i,n}$, which don't have to be normalized.  Following perturbation number $n$, the new phenotypes are 
+
+\be
+\O_{i,1} = \O_{i,0} + \beta_{i,1}.
+\ee
+
+\noindent When multiple perturbations act, say perturbations $1,2$, and $3$, we will use the notation $p_{i,123}$ and $\O_{i,123}$.
+
+%\noindent Here, $p_{i,n}$ is the probability of state $i$ after perturbation $n$.  The perturbations are encoded in $\alpha_{i,n}$ and $\beta_{i,n}$, with subscripts referring to the $i^{th}$ state and $n^{th}$ perturbation respectively.  They are arbitrary to the extent that each probability $p_i$ must be non-negative; an easy way to do that is to require that the $\alpha_i$s be non-negative.  Probability conservation is automatically enforced with the use of normalization factors $Z_{n}$, which are equal to $1$ plus the sum of the $\alpha_j$s, which we denote by $A_n$.  When multiple perturbations act, say perturbations $1,2$, and $3$, we will use the notation $p_{i,123}$ and $\O_{i,123}$.
+
+While extremely simple, this model can be used to study when and how epistasis emerges in a general context.  When the $\alpha_i$'s and $\beta_i$'s are all independent, any epistasis that arises is due purely to the ensemble. 
+
+\section*{Calculations}
+
+\subsection*{1. Epistasis arises even when perturbations only alter the probabilities of each state and not their phenotypes}
+
+Consider a set of perturbations that don't alter the phenotype of each state, so all $\beta_i=0$, but do alter the probabilities of each state.  The measured phenotype after each single perturbation is
+
+\be
+\langle \O \rangle_n = \sum_j \O_jp_{j,n} = 2^{-1}\sum_j \O_j (p_{j,0} + \alpha_{j,n}) = 2^{-1}\left(\langle \O \rangle_0 + \sum_j \O_j \alpha_{j,n}\right) \equiv 2^{-1}(\langle \O \rangle_0 + \langle \O \rangle^{\alpha}_n).
+\ee
+
+\noindent The ensemble averaged phenotype following perturbation $n$ is an average of averages: the average of the phenotype averaged over the original probability measure and over the perturbing measure.  We have introduced the notation
+
+\be
+ \langle \O \rangle^{\alpha}_n  \equiv \sum_j \O_j \alpha_{j,n}.
+\ee
+
+Let's now consider the effect of double perturbations.  Specifically, let's consider the effect of perturbation $m$ following perturbation $n$ on the original system:
+
+\bea
+\langle \O \rangle_{nm} &=& \sum_j \O_jp_{j,nm} \nonumber\\
+&=& 2^{-1}\sum_j \O_j (p_{j,n} + \alpha_{j,m}) \nonumber\\
+&=& 2^{-1}(\langle \O \rangle_n + \langle \O \rangle_m^{\alpha}) \nonumber\\
+&&\nonumber\\
+&=& 2^{-1}(2^{-1}[\langle \O \rangle_0 + \langle \O \rangle_n^{\alpha}] +  \langle \O \rangle_m^{\alpha})\nonumber\\
+&&\nonumber\\
+&=& 4^{-1}\langle \O \rangle_0 + 4^{-1} \langle \O \rangle_n^{\alpha} + 2^{-1} \langle \O \rangle_m^{\alpha}.
+\eea
+
+\noindent A straightforward calculation shows that if the phenotypes are identical for all the states, the perturbations have no effect, as expected, since there is no variation to average over.  %More generally, for an ordered set of perturbations $n_Mn_{M_1}...n_2n_1$ ($n_M$ first, $n_1$ last), the result it
+
+%\be
+%\langle \O \rangle_{n_Mn_{M_1}...n_2n_1} = 2^{-M}\langle \O \rangle_0  + \sum_{k=1}^M 2^{-k}  \langle \O \rangle_{n_k}^{\alpha}. 
+%\ee
+
+To see if pairwise epistasis appears in this system, we compare this result to the prediction of an additive model.  When there is only one state and the phenotypes are perturbed directly via $\beta$ terms, the additive model is
+
+\bea
+\O^{\text{add}}_{nm} &=& \O_0 + \beta_n + \beta_m \nonumber\\
+&=&  \O_0 + (\O_0 + \beta_n) + (\O_0 + \beta_m) - 2\O_0 \nonumber\\
+&=& \O_n + \O_m - \O_0.
+\eea
+
+\noindent By analogy, the additive model in a multi-state system is
+
+\bea
+\langle \O \rangle^{\text{add}}_{nm} &=&  \langle \O \rangle_{n}  + \langle \O \rangle_{m} - \langle \O \rangle_{0}\nonumber\\
+&&\nonumber\\
+&=& 2^{-1}(\langle \O \rangle_0 + \langle \O \rangle_n^{\alpha}) + 2^{-1}(\langle \O \rangle_0 + \langle \O \rangle_m^{\alpha})  - \langle \O \rangle_{0}\nonumber\\ 
+&&\nonumber\\
+&=&  2^{-1}(\langle \O \rangle_n^{\alpha} + \langle \O \rangle_m^{\alpha}).
+\eea
+
+\noindent The difference between measured and predicted observables is
+
+\be
+\langle \O \rangle_{nm} - \langle \O \rangle^{\text{add}}_{nm} = 4^{-1}\left(\langle \O \rangle_{0} - \langle \O \rangle_n^{\alpha}\right).
+\ee
+
+
+
+Epistasis arises anytime the probabilities of each state change, and its magnitude depends on the difference between the average phenotype over the original and perturbing probability distributions.  This derivation was completely agnostic to the nature of the perturbations and the phenotype.  Even if the perturbations are all taken to be independent (say, independent random variables), epistasis still arises.  The additive model will not predict correctly, despite the the fact that the perturbations to each state's phenotype are purely additive.  
+
+TO DO: more mutations + high-order epistasis, effect of perturbations to the phenotypes.
+
+\subsection*{2. The many state limit and the Central Limit Theorem}
+
+Much of the recent surge in physics-inspired community ecology is motivated by the idea that in the limit of large ecosystems (many species), universal behavior emerges, akin to universality in non-living systems.  Mathematically, this is studied using a disordered systems approach: model parameters are drawn from probability distributions to represent ``typical'' systems, calculations are performed, and then the results are averaged over random draws of the parameters, leading to general conclusions.  In the limit of many species (analogous to thermodynamic limit), community observables (often involving sums over species) take on universal properties via the Central Limit Theorem and become simpler to evaluate, since they involve only Gaussian variables.  I'm beginning to explore this approach in the context of this toy ensemble model---what does ensemble induced epistasis look like in the limit of many states?  In the following, I show that pairwise epistasis limits to a Gaussian variable and compute its mean and variance.
+
+Let's start with a set of probabilities and phenotypes, $\{p_{i,0},\O_{i}\}$, $i = 1,2,3,...,S$, taken as given.  Let's draw all the $\alpha_{i,n}$ parameters from the same well-behaved (no fat tail) probability distribution.  To enforce normalization, we'll construct the $\alpha$'s via
+
+\be
+\alpha_{i,n} \equiv \frac{\tilde{\alpha}_{i,n}}{\sum_j \tilde{\alpha}_{j,n}}
+\ee
+
+\noindent where the $\tilde{\alpha}$s come from a probability distribution with a finite mean $\tilde{\mu}_{\alpha}/S$ and variance $\tilde{\sigma}^2_{\alpha}/S$.  The $1/S$ scaling is required to ensure a well defined limit, analogous to the thermodynamic limit in physics. 
+
+Now let's consider what happens to the average phenotype over the perturbing distribution,  $\langle \O \rangle^{\alpha}_n$,  as the number of states becomes large.  In terms of the $\tilde{\alpha}$s,
+
+\bea
+\langle \O \rangle^{\alpha}_n&=& \sum_j \O_j \alpha_{j,n} \nonumber\\
+&=& \frac{1}{\sum_k \tilde{\alpha}_{k,n}} \sum_j \O_j \tilde{\alpha}_{j,n}
+\eea
+
+\noindent As $S\to\infty$, the normalization term can be replaced by $\tilde{\mu}_{\alpha}$,
+
+\be
+\langle \O \rangle^{\alpha}_n \to  \frac{1}{\tilde{\mu}_{\alpha}}\sum_j \O_j \tilde{\alpha}_{j,n}.
+\ee
+
+\noindent Since the sum is over $S$ terms, by the Central Limit Theorem, $\langle \O \rangle^{\alpha}_n $ limits to a Gaussian variable regardless of the nature of the $\alpha$'s.  This means that the magnitude of pairwise epistasis,
+
+\be
+\langle \O \rangle_{nm} - \langle \O \rangle^{\text{add}}_{nm} = 4^{-1}\left(\langle \O \rangle_{0} - \langle \O \rangle_n^{\alpha}\right),
+\ee
+
+\noindent limits to a Gaussian distributed variable, regardless of the nature of the $\alpha$s.
+
+Defining an average over realizations of the $\alpha$ parameters as $\expec[...]_{\alpha}$, the mean of $\langle \O \rangle_n^{\alpha}$ is
+
+\bea
+\expec[\langle \O \rangle^{\alpha}_n]_{\alpha} &=&   \frac{1}{\tilde{\mu_{\alpha}}}\sum_j \O_j\expec[ \tilde{\alpha}_{j,n}]_{\alpha}\nonumber\\
+&=& \frac{1}{\tilde{\mu_{\alpha}}}\frac{\tilde{\mu_{\alpha}}}{S}\sum_j \O_j\nonumber\\
+&\equiv& \bar{\O},
+\eea
+
+\noindent or the empirical mean phenotype of the $S$ states.  In other words, the average phenotype over a uniform distribution.  Therefore, the mean pairwise epistasis is
+
+\be
+\lim_{S\to\infty}\expec\left[\langle \O \rangle_{nm} - \langle \O \rangle^{\text{add}}_{nm}\right]_{\alpha} = 4^{-1}\left(\langle \O \rangle_{0} - \bar{\O }\right).
+\ee
+
+\noindent The limiting mean is truly universal---it doesn't depend on the perturbations at all, only on what we took as given, namely the original probabilities and observables, $\{p_{i,0},\O_{i}\}$.  The fact that the mean of the $\tilde{\alpha}$s doesn't even appear here reflects the fact that the average perturbation gets normalized out, so is unphysical.
+
+The variance of the limiting distribution depends on the variance of the underlying $\alpha$s:
+
+\bea
+\lim_{S\to\infty}\Var\left[\langle \O \rangle_{nm} - \langle \O \rangle^{\text{add}}_{nm}\right]_{\alpha} &=& \Var\left[4^{-1}\left(\langle \O \rangle_{0} - \langle \O \rangle_n^{\alpha}\right)\right]_{\alpha}\nonumber\\
+&=& \frac{1}{16}\Var\left[\langle \O \rangle_n^{\alpha}\right]_{\alpha}\nonumber\\
+&&\nonumber\\
+&=& \frac{\sigma^2_{\O}\sigma^2_{\alpha}}{16\mu^2_{\alpha}}.
+\eea
+ 
+\noindent Here $\sigma^2_{\O}$ is the empirical variance of the phenotypes.  It's encouraging that this appears: if all the phenotypes are the same ($\sigma^2_{\O}=0$), there should be no effect of perturbing the probabilities, and we see the variance of epistasis going to zero, along with the mean.  The ratio $\sigma^2_{\alpha}/\mu^2_{\alpha}$ should be thought of as the strength of the perturbation, and so naturally sets the scale of pairwise epistasis.
+
+%  with a specified mean $\mu_{\alpha}$ and variance $\sigma^2_{\alpha}$.  Let's also drThen, the $A_n$ factors that appear in the normalization constants take on a universal limit when the number of states becomes large:
+
+%\be
+%\lim_{S\to\infty}A_n = \lim_{S\to\infty}\sum_{j=1}^S \alpha_{j,n} \equiv \tilde{A}
+%\ee
+
+%\noindent where $\tilde{A}$ is a Gaussian random variable with the mean $S\mu_{\alpha}$ and variance $\sigma^2_{\alpha}$.
+
+%The $\epsilon_n$ terms also take on universal values in this limit,
+
+%\be
+%\lim_{S\to\infty}\epsilon_n = \lim_{S\to\infty}\sum_{j=1}^S \O_j\alpha_{j,n} \equiv \tilde{\epsilon},
+%\ee
+
+%\noindent with $\tilde{\epsilon}$ another Gaussian random variable.  The parameters of that distribution depend in general on the particular values of the $\O_j$'s, but we can just draw those from a distribution as well to simplify things.  Let's say the $\O_j$'s come from well behaved distribution with mean $\bar{\O}$.  Averaging over the $\O_j$'s leaves
+
+%\be
+%\lim_{S\to\infty}\epsilon_n = \lim_{S\to\infty}\bar{\O} \sum_{j=1}^S \alpha_{j,n} = \bar{\O} \tilde{A}
+%\ee
+
+%Using these values, the error of the additive model limits to
+
+%\be
+%\lim_{S\to\infty}\frac{\langle \O \rangle_{nm} - \langle \O \rangle^{\text{add}}_{nm} }{\langle \O \rangle_0} = \frac{\tilde{A}^3}{\left(1+\tilde{A}\right)^2}\left(1- \frac{\bar{\O}}{\langle \O \rangle_0}\right)\sim\tilde{A}\left(1- \frac{\bar{\O}}{\langle \O \rangle_0}\right).
+%\ee
+
+%Since the average value of $\tilde{A} \sim S$, it appears that the error diverges linearly in $S$ unless $\bar{\O}=\langle \O \rangle_0$.  However, when averaging over the $\alpha_j$'s, we must also consider what happens to $\langle \O \rangle_0$, the average phenotype over the initial probabilities.  As the number of states grows, the system becomes self averaging, and it appears that $\langle \O \rangle_0$ limits to $\bar{\O}$, which suppresses the divergence of $\tilde{A}$.  Fluctuations may alter this and yield a finite limit---I need to do this calculation more carefully.  If that doesn't happen, the result is kind of bizarre: for independent and identically distributed additive perturbations, there is no epistasis for systems with one state, it arises for more than one state, but as the number of states becomes large, it decays to zero.  In other words, the strength of epistasis would be non-monotonic in the number of states. 
+
+%To be explicit: imagine we've generated a set of $\O_j$'s from our favorite distribution with mean $\bar{\O]$.  We then specify probabilities for $S$ states, either randomly or by some other means, and compute the expectation of $\O$ over this distribution.  These two averages need not be the same.  However, as the number of states grows,
+
+%\be
+%\lim_{S\to\infty}\frac{\langle \O \rangle_{nm} - \langle \O \rangle^{\text{add}}_{nm} }{\langle \O \rangle_0} = \frac{\tilde{A}^2}{\left(1+\tilde{A}\right)^2}\left(\tilde{A} - \frac{\bar{\O}\tilde{A}}{\langle \O \rangle_0}\right).
+%\ee
+
+%\noindent Defining $\Delta_{nm} \equiv\langle \O \rangle_{nm} - \langle \O \rangle^{\text{add}}_{nm} $, we can compute the logarithm of this error as
+
+%\be
+%\lim_{S\to\infty}\ln\frac{\Delta_{nm}}{\langle \O \rangle_0}  = 2\ln\tilde{A} + 2\ln(1+\tilde{A}) + \ln\left(1+\frac{\tilde{\epsilon}}{\langle \O \rangle_0 \tilde{A}}\right).
+%\ee
+
+%\noindent Finally, we can average over random realizations of these parameters, using the notation $[...]_{\text{av}}$:
+
+%\be
+%\lim_{S\to\infty}\left[\ln\frac{\Delta_{nm}}{\langle \O \rangle_0}\right]_{\text{av}}  = 2\left[\ln\tilde{A}\right]_{\text{av}} + 2\left[\ln(1+\tilde{A})\right]_{\text{av}} + \left[\ln\left(1+\frac{\tilde{\epsilon}}{\langle \O \rangle_0 \tilde{A}}\right)\right]_{\text{av}}.
+%\ee
+
+%\noindent This expression gives a universal value for the error of an additive model in predicting a double perturbation (mutant) phenotype in terms of averages of the logarithms of Gaussian random variables, which can be computed perturbatively.  It is universal in the sense that the $\alpha_{i,n}$ parameters can be drawn from any well-behaved distribution and in the limit of many states, the result will be the same.
+
+
+\end{document}
